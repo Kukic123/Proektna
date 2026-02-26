@@ -1,26 +1,199 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Tic Tac Toe</title>
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css" />
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<!-- MODAL FOR NAMES -->
-<div id="nameModal" class="modal">
-  <div class="modal-content">
-    <h2>Enter Player Names</h2>
-    <input type="text" id="player1Input" placeholder="Player 1 (X)">
-    <input type="text" id="player2Input" placeholder="Player 2 (O)">
-    <button id="startGameBtn">Start Game</button>
+<!-- TOP NAV -->
+<header class="topbar">
+  <div class="brand" id="navHomeBtn">
+    <span class="brand-dot"></span>
+    <span class="brand-text">Tic Tac Toe</span>
+  </div>
+
+  <nav class="nav">
+    <button class="nav-link" id="navHome">Home</button>
+    <button class="nav-link" id="navGame">Game</button>
+    <button class="nav-link" id="navHow">How to Play</button>
+    <button class="nav-link" id="navBoard">Leaderboard</button>
+  </nav>
+</header>
+
+<!-- BACKGROUND DECOR -->
+<div class="bg-blobs">
+  <span class="blob b1"></span>
+  <span class="blob b2"></span>
+  <span class="blob b3"></span>
+</div>
+
+<!-- =================== PAGES WRAPPER =================== -->
+<main class="pages">
+
+  <!-- ===== HOME PAGE ===== -->
+  <section id="pageHome" class="page active">
+    <div class="hero">
+      <div class="hero-left">
+        <h1 class="reveal-up">Think fast.<br>Play smart.<br>Win the grid.</h1>
+
+        <p class="hero-sub reveal-up delay-1">
+          Classic Tic Tac Toe — but cleaner, smoother, and more competitive.
+          Enter your names, track wins, and settle it like champions.
+        </p>
+
+        <div class="stats reveal-up delay-2">
+          <div class="stat">
+            <div class="stat-big">9</div>
+            <div class="stat-small">Cells</div>
+          </div>
+          <div class="stat">
+            <div class="stat-big">2</div>
+            <div class="stat-small">Players</div>
+          </div>
+          <div class="stat">
+            <div class="stat-big">∞</div>
+            <div class="stat-small">Rematches</div>
+          </div>
+        </div>
+
+        <div class="hero-actions reveal-up delay-3">
+          <button class="btn primary" id="playBtn">Play Now</button>
+          <button class="btn ghost" id="howBtn">How to Play</button>
+        </div>
+      </div>
+
+      <div class="hero-right reveal-up delay-2">
+        <div class="card-ill">
+          <div class="circle">
+            <div class="xo-float">X</div>
+            <div class="xo-float o">O</div>
+          </div>
+
+          <div class="mini-cards">
+            <div class="mini">
+              <span class="badge">Tip</span>
+              <p>Control the center early.</p>
+            </div>
+            <div class="mini">
+              <span class="badge">Goal</span>
+              <p>3 in a row wins.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== HOW TO PLAY PAGE ===== -->
+  <section id="pageHow" class="page">
+    <div class="content-card">
+      <h2>How to Play</h2>
+      <ol class="steps">
+        <li><b>Choose mode</b>: Vs Player or Vs Bot.</li>
+        <li>Players take turns placing <b>X</b> and <b>O</b>.</li>
+        <li>First to get <b>3 in a row</b> (row/column/diagonal) wins.</li>
+        <li>If the board fills and nobody wins → <b>Draw</b>.</li>
+      </ol>
+
+      <div class="how-actions">
+        <button class="btn primary" id="howPlayBtn">Start a Game</button>
+        <button class="btn ghost" id="backHomeFromHow">Back Home</button>
+      </div>
+
+      <div class="hint-box">
+        <div class="hint-title">Pro move</div>
+        <p>Try to create a “fork” — two winning chances at once.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== LEADERBOARD PAGE ===== -->
+  <section id="pageBoard" class="page">
+    <div class="content-card">
+      <h2>Leaderboard</h2>
+      <p class="muted">This updates automatically when someone wins.</p>
+
+      <div class="board">
+        <div class="board-row head">
+          <div>Player</div>
+          <div>Symbol</div>
+          <div>Wins</div>
+        </div>
+
+        <div class="board-row">
+          <div id="lbP1Name">Player 1</div>
+          <div class="sym">X</div>
+          <div id="lbP1Wins" class="wins">0</div>
+        </div>
+
+        <div class="board-row">
+          <div id="lbP2Name">Player 2</div>
+          <div class="sym">O</div>
+          <div id="lbP2Wins" class="wins">0</div>
+        </div>
+      </div>
+
+      <div class="how-actions">
+        <button class="btn primary" id="boardPlayBtn">Play Again</button>
+        <button class="btn ghost" id="backHomeFromBoard">Back Home</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ================= MODE MODAL (NEW) ================= -->
+<div id="modeModal" class="modal" style="display:none;">
+  <div class="mode-card">
+    <h2>Choose Mode</h2>
+    <p class="muted" style="margin-top:6px;">How do you want to play?</p>
+
+    <div class="mode-grid">
+      <button class="mode-btn" id="vsPlayerBtn">
+        <div class="mode-title">Vs Player</div>
+        <div class="mode-sub">Two people on the same device</div>
+      </button>
+
+      <button class="mode-btn" id="vsBotBtn">
+        <div class="mode-title">Vs Bot</div>
+        <div class="mode-sub">Play against the computer</div>
+      </button>
+    </div>
+
+    <button class="btn ghost" id="closeModeBtn" style="margin-top:14px;">Cancel</button>
   </div>
 </div>
 
-<div id="gameContainer">
-  <h1 class="title">Tic Tac Toe</h1>
+<!-- ================= NAME MODAL ================= -->
+<div id="nameModal" class="modal" style="display:none;">
+  <div class="modal-content split">
+    <div class="modal-left">
+      <h1 id="nameTitle">Enter Player Names 🎮</h1>
+      <p id="nameSub">Choose your fighters and start!</p>
 
+      <input type="text" id="player1Input" placeholder="Player 1 (X)">
+      <input type="text" id="player2Input" placeholder="Player 2 (O)">
+
+      <button id="startGameBtn">Start Game</button>
+      <button class="modal-close" id="closeModalBtn" aria-label="Close">✕</button>
+    </div>
+
+    <div class="modal-right">
+      <div class="modal-art">
+        <div class="ring"></div>
+        <div class="bigXO">X O</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= GAME ================= -->
+<div id="gameContainer" style="display:none;">
+  <h1 class="title">Tic Tac Toe</h1>
   <h2 id="playersText">Player 1 (X) vs Player 2 (O)</h2>
 
   <div id="cellContainer">
@@ -36,11 +209,13 @@
   </div>
 
   <h2 id="statusText"></h2>
-
   <div id="scoreBoard">Player 1: 0 | Player 2: 0</div>
 
-  <button id="restartBtn">Restart</button>
-  <button id="newPlayersBtn">New Players</button>
+  <div class="game-actions">
+    <button id="restartBtn">Restart</button>
+    <button id="newPlayersBtn">New Players</button>
+    <button id="backToHomeBtn" class="btn ghost small">Back Home</button>
+  </div>
 </div>
 
 <script src="index.js"></script>
